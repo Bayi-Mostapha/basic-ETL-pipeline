@@ -14,3 +14,8 @@ services:
     build: .
     depends_on:
       - db
+    environment:
+      DB_HOST: 'db'
+      DB_PORT: 5432
+      DB_USR: ${DB_USR}
+      DB_PWD: ${DB_PWD}
