@@ -3,13 +3,15 @@ from sqlalchemy import create_engine
 from sqlalchemy.exc import SQLAlchemyError
 import os
 
-data = pd.read_csv("./data/student_exam_scores.csv")
+def extract():
+    return pd.read_csv("./data/student_exam_scores.csv")
 
-def transform():
+def transform(data):
     data.previous_scores = data.previous_scores.astype(float)
     data.student_id = pd.Series(range(1, len(data) + 1), dtype=int)
+    return data
 
-def check_type():
+def check_type(data):
     assert pd.api.types.is_integer_dtype(data.student_id)
     assert pd.api.types.is_float_dtype(data.hours_studied)
     assert pd.api.types.is_float_dtype(data.sleep_hours)
@@ -33,7 +35,7 @@ def connect_db():
         print("Unexpected error:", e)
         exit(0)
 
-def load(engine):
+def load(data, engine):
     if not engine:
         exit(0)
     try:
@@ -50,10 +52,11 @@ def load(engine):
         print("Unexpected error:", e)
 
 def main():
-    transform()
-    check_type()
+    data = extract()
+    data = transform(data)
+    check_type(data)
     e = connect_db()
-    load(e)
+    load(data, e)
 
 if __name__ == "__main__":
     main()
