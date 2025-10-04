@@ -27,4 +27,6 @@ def check_type():
 
 check_type()
 
+data.previous_scores = data.previous_scores.astype(float)
+
 print("data types are good, starting script")
