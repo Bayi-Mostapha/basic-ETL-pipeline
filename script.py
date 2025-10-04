@@ -28,5 +28,7 @@ def check_type():
 check_type()
 
 data.previous_scores = data.previous_scores.astype(float)
+data.student_id = pd.Series(range(1, len(data) + 1), dtype=int)
 
 print("data types are good, starting script")
+
